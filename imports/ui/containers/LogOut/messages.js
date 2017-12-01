@@ -6,8 +6,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  fieldOne: {
-    id: 'containers.LogOut.fieldOne',
-    defaultMessage: 'This is LogOut container !',
-  },
+  logOutMessage: {
+    id: 'containers.LogOut.logOutMessage',
+    defaultMessage: 'You are being logged out.'
+  }
 });

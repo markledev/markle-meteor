@@ -9,8 +9,7 @@ import createReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
 
-export default function configureStore(name, reducer, sagas, initialState = {}) {
-
+export default function configureStore (name, reducer, sagas, initialState = {}) {
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
 
@@ -19,21 +18,21 @@ export default function configureStore(name, reducer, sagas, initialState = {}) 
   ];
 
   const enhancers = [
-    applyMiddleware(...middlewares),
+    applyMiddleware(...middlewares)
   ];
 
   const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
     typeof window === 'object' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
   /* eslint-enable */
   let store;
   if (!window.store) {
     store = createStore(
       createReducer(name, reducer),
       fromJS(initialState),
-      composeEnhancers(...enhancers) 
+      composeEnhancers(...enhancers)
     );
 
     window.store = store;
@@ -41,9 +40,6 @@ export default function configureStore(name, reducer, sagas, initialState = {}) 
     store = window.store;
     store.replaceReducer(createReducer(name, reducer));
   }
-  
-  
-  
 
   store.runSaga = sagaMiddleware.run;
   sagas.map(store.runSaga);

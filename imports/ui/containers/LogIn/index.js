@@ -3,26 +3,36 @@
 * LogIn
 *
 */
+// npm packages
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { connect } from 'react-redux-meteor';
-import { toJS } from 'immutable';
 import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types';
+import * as globalVar from '/imports/utils/client/globalVar';
+
+// custom imports
+import messages from './messages';
 import * as selectors from './selectors';
 import { TRIGGER_SAGA_ONE } from './constants';
 import { GET_ALL_USERS } from '/imports/publications/LogIn/constants';
 import styles from './styles';
 
 class LogIn extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
-      isMobileInterface: false
+      isMobileInterface: false,
+      email: '',
+      password: '',
+      loginMessage: ''
     };
+    this.handleInputChanged = this.handleInputChanged.bind(this);
+    this.logIn = this.logIn.bind(this);
   }
 
-  componentWillMount() {
+  componentWillMount () {
     let isMobileInterface = false;
     let isNotSupported = true;
 
@@ -31,35 +41,79 @@ class LogIn extends React.Component {
     }
 
     const ua = navigator.userAgent.toLowerCase();
-    if (ua.indexOf('safari') != -1)
-      isNotSupported = false;
-    if (ua.indexOf('firefox') > -1)
-      isNotSupported = false;
+    if (ua.indexOf('safari') !== -1) isNotSupported = false;
+    if (ua.indexOf('firefox') > -1) isNotSupported = false;
 
     this.setState({
       isNotSupported,
       isMobileInterface
     });
-
   }
 
-  render() {
+  handleInputChanged (evt) {
+    const name = evt.target.name;
+    const value = evt.target.value;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  redirectToForgetPassword () {
+    FlowRouter.go('resetPassword');
+  }
+
+  logIn (evt) {
+    evt.preventDefault();
     const {
-      allUsers,
-      dispatchReducerOne,
-      var1,
+      email,
+      password
+    } = this.state;
+    let loginMessage = '';
+    Meteor.loginWithPassword(email, password, (error) => {
+      if (!error) {
+        // create json webtoken.
+        Meteor.call('createJWT', email, (err, token) => {
+          if (!err) {
+            globalVar.set('jwt', token);
+            FlowRouter.go('sampleContainer');
+          }
+        });
+      } else {
+        if (error && error.reason === 'User has no password set') {
+          loginMessage = 'You didn\'t activate your account yet. <br/><a href="#" class="resendEnrollment"><strong>Click here to send your activation email again</strong></a>';
+        } else {
+          loginMessage = error.reason;
+        }
+        $('body,html').scrollTop(0);
+      }
+    });
+
+    this.setState({
+      loginMessage
+    });
+  }
+
+  render () {
+    const {
       currentUser
     } = this.props;
 
     const {
       isMobileInterface,
-      isNotSupported
+      isNotSupported,
+      loginMessage
     } = this.state;
-    console.log('my current user is: ', currentUser)
+
     return (
       <div>
         <div style={styles.mainContainer}>
           <div className="middle-box text-center loginscreen animated fadeInDown">
+            { loginMessage.length ? (
+              <div className="alert alert-info">
+                {loginMessage}
+              </div>
+              ) : ''}
             <div>
               <div>
                 <img src="/img/otonomos/logoGrey40.png" />
@@ -75,13 +129,15 @@ class LogIn extends React.Component {
               {
                 currentUser ? (
                   <div>
-                    <p>You are already logged in, please go to the dashboard.</p>
                     <p>
-                      <a href="{{pathFor route='dashboard'}}" className="btn btn-w-m btn-primary">
-                        Proceed to Dashboard
+                      <FormattedMessage {...messages.alreadyLoggedIn}/>
+                    </p>
+                    <p>
+                      <a href="#" className="btn btn-w-m btn-primary" onClick={() => FlowRouter.go('sampleContainer')}>
+                        <FormattedMessage {...messages.proceedToDashboard}/>
                       </a>
                       <a href="#" className="logout btn btn-w-m btn-danger">
-                        Logout
+                        <FormattedMessage {...messages.logOut}/>
                       </a>
                     </p>
                   </div>
@@ -113,29 +169,67 @@ class LogIn extends React.Component {
                       )
                     )
                   }
-                    <form className="m-t" role="form" id="login">
+                    <form className="m-t" role="form" id="login" onSubmit={evt => this.logIn(evt) }>
                       <div className="form-group">
-                        <input name="loginEmail" type="email" className="form-control" placeholder="Email" />
+                        <input
+                          name="email"
+                          type="email"
+                          className="form-control"
+                          placeholder="Email"
+                          onChange={this.handleInputChanged}
+                        />
                       </div>
                       <div className="form-group">
-                        <input name="loginPassword" type="password" className="form-control" placeholder="Password" />
+                        <input
+                          name="password"
+                          type="password"
+                          className="form-control"
+                          placeholder="Password"
+                          onChange={this.handleInputChanged}
+                        />
                       </div>
-                      <button type="submit" className="btn btn-primary block full-width m-b" id="loginButton">Login</button>
-                      <a href="{{pathFor route='passwordRecovery'}}"><small>Forgot password?</small></a>
+
+                      <button
+                        className="btn btn-primary block full-width m-b"
+                        type="submit"
+                      >
+                        Login
+                      </button>
                     </form>
+                    <p>
+                      <a
+                        onClick={evt => this.redirectToForgetPassword(evt)}
+                      >
+                        <small>
+                          <FormattedMessage {...messages.forgetPassword}/>
+                        </small>
+                      </a>
+                    </p>
+                    <p>
+                      <a
+                        onClick={() => FlowRouter.go('createAccount')}
+                      >
+                        <small>
+                          <FormattedMessage {...messages.createAccount}/>
+                        </small>
+                      </a>
+                    </p>
+                    <br/>
                   </div>
                 )
               }
               <p className="m-t">
                 <small>
                   <FormattedMessage {...messages.footer}/>
-                  <a href="http://www.otonomos.com/terms-and-conditions/" target="_blank" title="View Otonomos' Terms and Conditions">
+                  {' '}
+                  <a href="http://www.otonomos.com/terms-and-conditions/" target="_blank" rel="noopener noreferrer" title="View Otonomos' Terms and Conditions">
                     <FormattedMessage {...messages.termsConditions}/>
                   </a>
-                    and
-                  <a href="https://www.otonomos.com/privacy-policy/" target="_blank" title="View Otonomos' Privacy Policy">
+                  {' and '}
+                  <a href="https://www.otonomos.com/privacy-policy/" target="_blank" rel="noopener noreferrer" title="View Otonomos' Privacy Policy">
                     <FormattedMessage {...messages.privacyPolicy}/>
-                  </a>.
+                  </a>
+                  {'. '}
                   <FormattedMessage {...messages.betaRelease}/>
                   <br/> &copy; 2017
                 </small>
@@ -147,12 +241,17 @@ class LogIn extends React.Component {
     );
   }
 
-  //Keep this function intact to ensure app stability
-  componentWillUnmount() {
+  // Keep this function intact to ensure app stability
+  componentWillUnmount () {
     const { dispatchStopSagas } = this.props;
     dispatchStopSagas();
   }
 }
+
+LogIn.propTypes = {
+  currentUser: PropTypes.object,
+  dispatchStopSagas: PropTypes.func
+};
 
 const mapTrackerToProps = (state, props) => {
   if (Meteor.subscribe(GET_ALL_USERS).ready()) {
@@ -160,11 +259,11 @@ const mapTrackerToProps = (state, props) => {
       currentUser: Meteor.user(),
       allUsers: Meteor.users.find().fetch(),
       subsReady: true
-    }
+    };
   }
 
-  return { currentUser: new Object(), allUsers: [], subsReady: false };
-}
+  return { currentUser: {}, allUsers: [], subsReady: false };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -177,10 +276,10 @@ const mapDispatchToProps = (dispatch) => {
     dispatchStopSagas: () => {
       dispatch({
         type: 'CANCEL_SAGAS'
-      })
+      });
     }
-  }
-}
+  };
+};
 
 const mapStateToProps = createStructuredSelector({
   var1: selectors.selectVar1()
@@ -190,4 +289,4 @@ export default connect(
   mapTrackerToProps,
   mapStateToProps,
   mapDispatchToProps
-) (LogIn);
+)(LogIn);

@@ -10,7 +10,7 @@ export const info = (...args) => {
 
 	console.log(args[0], finalMessage);
 	Meteor.call('loggerMethods/logInfo', args[0], finalMessage);
-}
+};
 
 export const warn = (...args) => {
 	let finalMessage = `\n====START WARN LOG====`;
@@ -21,7 +21,7 @@ export const warn = (...args) => {
 
 	console.log(args[0], finalMessage);
 	Meteor.call('loggerMethods/logWarn', args[0], finalMessage);
-}
+};
 
 export const error = (...args) => {
 	let finalMessage = `\n====START ERROR LOG====`;
@@ -32,4 +32,4 @@ export const error = (...args) => {
 
 	console.log(`%c${args[0]} ${finalMessage}`, 'color: #D91E18');
 	Meteor.call('loggerMethods/logError', args[0], finalMessage);
-}
+};

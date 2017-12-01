@@ -12,12 +12,12 @@ describe('<Toggle />', () => {
     const messages = defineMessages({
       en: {
         id: 'app.components.LocaleToggle.en',
-        defaultMessage: defaultEnMessage,
+        defaultMessage: defaultEnMessage
       },
       de: {
         id: 'app.components.LocaleToggle.en',
-        defaultMessage: defaultDeMessage,
-      },
+        defaultMessage: defaultDeMessage
+      }
     });
     const renderedComponent = shallow(
       <IntlProvider locale="en">

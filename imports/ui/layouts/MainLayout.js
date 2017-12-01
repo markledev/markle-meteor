@@ -1,35 +1,44 @@
 import React from 'react';
-import Progress from '../common/Progress';
+import PropTypes from 'prop-types';
+// import Progress from '../common/Progress';
 import Navigation from '../common/Navigation';
-import ScreenTooSmall from '../common/ScreenTooSmall';
+// import ScreenTooSmall from '../common/ScreenTooSmall';
 import Footer from '../common/Footer';
 import TopHeader from '../common/TopHeader';
 import { correctHeight, detectBody } from './Helpers';
-import { Provider } from 'react-redux-meteor';
-import configureStore from './store';
+// import { Provider } from 'react-redux-meteor';
+// import configureStore from './store';
+import $ from 'jquery';
+
 class MainLayout extends React.Component {
-
-  render() {
-    return (
-      <div id="wrapper">
-        <Navigation/>
-
-        <div id="page-wrapper" className="gray-bg">
-
-          <TopHeader />
-
-          { this.props.main }
-
-          <Footer />
-
-        </div>
-      </div>
-    )
+  constructor (props) {
+    super(props);
+    this.state = {};
   }
 
-  componentDidMount() {
+  componentWillMount () {
+    $('body').removeClass('gray-bg');
+  }
+
+  render () {
+    return (
+      <div id="page-wrapper">
+        <div id="page-container" className="header-fixed-top sidebar-visible-lg-full">
+          <Navigation/>
+          <div id="main-container">
+            <TopHeader/>
+            <div id="page-content">
+              { this.props.main }
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  componentDidMount () {
     // Run correctHeight function on load and resize window event
-    $(window).bind("load resize", function() {
+    $(window).bind('load resize', function () {
       correctHeight();
       detectBody();
     });
@@ -42,5 +51,9 @@ class MainLayout extends React.Component {
     // });
   }
 }
+
+MainLayout.propTypes = {
+  main: PropTypes.element
+};
 
 export default MainLayout;

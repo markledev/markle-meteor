@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import LocaleToggle from '../../containers/LocaleToggle';
 
 export default class Footer extends React.Component {
-  render() {
+  render () {
     return (
       <div className="footer">
         <div className="pull-right">

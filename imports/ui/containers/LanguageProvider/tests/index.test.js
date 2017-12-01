@@ -20,8 +20,8 @@ describe('<LanguageProvider />', () => {
     const messages = defineMessages({
       someMessage: {
         id: 'some.id',
-        defaultMessage: 'This is some default message',
-      },
+        defaultMessage: 'This is some default message'
+      }
     });
     const renderedComponent = shallow(
       <Provider store={store}>

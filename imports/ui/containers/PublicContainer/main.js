@@ -3,15 +3,13 @@ import { IntlProvider } from 'react-intl';
 import { translationMessages } from './translations';
 import PublicContainer from './index';
 import { Provider } from 'react-redux-meteor';
-import configureStore from '/imports/ui/layouts/store';
+import configureStore from '../../layouts/store';
 import reducer from './reducer';
 import sagas from './sagas';
-export default class PublicContainerMain extends React.Component {
-	constructor(props) {
-		super(props);
-	}
 
-	render() {
+import { Session } from 'meteor/session';
+export default class PublicContainerMain extends React.Component {
+	render () {
 		const currentLocale = Session.get('currentLocale') || 'en';
 		return (
 			<Provider store = { configureStore('PublicContainer', reducer, sagas) }>
@@ -19,6 +17,6 @@ export default class PublicContainerMain extends React.Component {
 					<PublicContainer />
 				</IntlProvider>
 			</Provider>
-			)
+			);
 	}
 }

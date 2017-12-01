@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   fieldOne: {
     id: 'containers.SampleContainer.fieldOne',
-    defaultMessage: 'This is SampleContainer container !',
+    defaultMessage: 'This is SampleContainer container !'
   },
 });

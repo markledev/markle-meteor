@@ -7,11 +7,7 @@ import configureStore from '/imports/ui/layouts/store';
 import reducer from './reducer';
 import sagas from './sagas';
 export default class RegisterAccountMain extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
+	render () {
 		const currentLocale = Session.get('currentLocale') || 'en';
 		return (
 			<Provider store = { configureStore('RegisterAccount', reducer, sagas) }>
@@ -19,6 +15,6 @@ export default class RegisterAccountMain extends React.Component {
 					<RegisterAccount />
 				</IntlProvider>
 			</Provider>
-			)
+			);
 	}
 }

@@ -12,7 +12,7 @@ addLocaleData(zhLocaleData);
 
 export const appLocales = [
   'en',
-  'zh',
+  'zh'
 ];
 
 const DEFAULT_LOCALE = 'en';
@@ -34,5 +34,5 @@ export const formatTranslationMessages = (locale, messages) => {
 
 export const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  zh: formatTranslationMessages('zh', zhTranslationMessages),
+  zh: formatTranslationMessages('zh', zhTranslationMessages)
 };

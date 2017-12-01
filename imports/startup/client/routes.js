@@ -4,19 +4,15 @@ import { mount } from 'react-mounter';
 
 import MainLayout from '/imports/ui/layouts/MainLayout';
 import MinorLayout from '/imports/ui/layouts/MinorLayout';
-import SampleContainer from '/imports/ui/containers/SampleContainer/main';
 
-import PublicContainer from '/imports/ui/containers/PublicContainer/main';
+import IntroPage from '/imports/ui/containers/IntroPage/main';
 
-import LogIn from '/imports/ui/containers/LogIn/main';
+import Checkout from '/imports/ui/containers/Checkout/main';
 
-import ResetPassword from '/imports/ui/containers/ResetPassword/main';
+import MultiLogin from '/imports/ui/containers/MultiLogin/main';
 
-import RegisterAccount from '/imports/ui/containers/RegisterAccount/main';
+// add_import_for_new_route
 
-import LogOut from '/imports/ui/containers/LogOut/main';
-
-//add_import_for_new_route
 
 
 
@@ -24,98 +20,68 @@ import LogOut from '/imports/ui/containers/LogOut/main';
 
 // validation logic
 const checkIfVE = function (ctx, redirect) {
-	// if (!Meteor.user() && !Meteor.loggingIn()) {
-	// 	redirect('login');
-	// }
-}
-
-const redirectIfLoggedIn = function(ctx, redirect) {
-	if (Meteor.userId() && FlowRouter.getRouteName() !== 'logout') {
-	  redirect('/dashboard');
+	if (!Meteor.user() && !Meteor.loggingIn()) {
+		redirect('login');
 	}
-}
+};
 
+const redirectIfLoggedIn = function (ctx, redirect) {
+	if (Meteor.userId() && FlowRouter.getRouteName() !== 'logout') {
+		redirect('introPage');
+	}
+};
 
 // Set up routes group in the app
 const publicRoutes = FlowRouter.group({
 	name: 'publicRoutes',
 	triggersEnter: [
-		redirectIfLoggedIn
+		// redirectIfLoggedIn
 	]
-})
+});
 
 const privateRoutes = FlowRouter.group({
   name: 'privateRoutes',
   triggersEnter: [
-    checkIfVE
-  ],
+    // checkIfVE
+  ]
 });
 
-// // Set up all routes in the app
-// FlowRouter.route('/', {
-//   name: 'App.home',
-//   action() {
-//     FlowRouter.go('SampleContainer');
-//   },
-// });
+// Set up all routes in the app
+FlowRouter.route('/', {
+  name: 'App.home',
+  action () {
+    FlowRouter.go('introPage');
+  }
+});
 
-
-privateRoutes.route('/SampleContainer', {
-  name: 'sampleContainer',
+privateRoutes.route('/IntroPage', {
+  name: 'introPage',
   action() {
     mount(MainLayout, {
-      main: <SampleContainer/>,
+      main: <IntroPage/>,
     });
   },
 });
 
-publicRoutes.route('/PublicContainer', {
-  name: 'publicContainer',
+privateRoutes.route('/Checkout', {
+  name: 'checkout',
   action() {
-    mount(MinorLayout, {
-      main: <PublicContainer/>,
+    mount(MainLayout, {
+      main: <Checkout/>,
     });
   },
 });
 
-
-publicRoutes.route('/LogIn', {
-  name: 'logIn',
+publicRoutes.route('/MultiLogin', {
+  name: 'multiLogin',
   action() {
-    mount(MinorLayout, {
-      main: <LogIn/>,
+    mount(MainLayout, {
+      main: <MultiLogin/>,
     });
   },
 });
 
-publicRoutes.route('/ResetPassword', {
-  name: 'resetPassword',
-  action() {
-    mount(MinorLayout, {
-      main: <ResetPassword/>,
-    });
-  },
-});
-
-publicRoutes.route('/RegisterAccount', {
-  name: 'registerAccount',
-  action() {
-    mount(MinorLayout, {
-      main: <RegisterAccount/>,
-    });
-  },
-});
-
-publicRoutes.route('/LogOut', {
-  name: 'logOut',
-  action() {
-    mount(MinorLayout, {
-      main: <LogOut/>,
-    });
-  },
-});
-
-//add_new_route
+// add_new_route
 
 
 

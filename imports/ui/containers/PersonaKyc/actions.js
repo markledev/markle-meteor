@@ -1,6 +1,0 @@
-/*
- *
- * PersonaKyc actions
- *
- */
-

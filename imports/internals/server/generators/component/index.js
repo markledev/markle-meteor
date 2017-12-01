@@ -25,7 +25,7 @@ module.exports = {
       }
 
       return 'The name is required';
-    },
+    }
   }],
   actions: (data) => {
     // Generate index.js and index.test.js
@@ -49,52 +49,52 @@ module.exports = {
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/index.js',
       templateFile: './component/es6.js.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     }, {
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/tests/index.test.js',
       templateFile: './component/test.js.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     }];
 
-    //Add all files in translations folder
+    // Add all files in translations folder
     actions.push({
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/translations/en.json',
       templateFile: './component/translations/en.json.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     });
 
     actions.push({
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/translations/zh.json',
       templateFile: './component/translations/zh.json.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     });
 
     actions.push({
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/translations/index.js',
       templateFile: './component/translations/index.js.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     });
 
-    //Add i18n messages
+    // Add i18n messages
     actions.push({
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/messages.js',
       templateFile: './component/messages.js.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     });
 
-    //Add local styles 
+    // Add local styles 
     actions.push({
       type: 'add',
       path: '../../../ui/components/{{properCase name}}/styles.js',
       templateFile: './component/styles.js.hbs',
-      abortOnFail: true,
+      abortOnFail: true
     });
 
     return actions;
-  },
+  }
 };

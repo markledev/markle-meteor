@@ -1,7 +1,7 @@
 import React from 'react';
 
-import messages from './messages';
-import { FormattedMessage } from 'react-intl';
+// import messages from './messages';
+// import { FormattedMessage } from 'react-intl';
 
 import { smoothlyMenu } from '../../layouts/Helpers';
 
@@ -9,19 +9,18 @@ import { smoothlyMenu } from '../../layouts/Helpers';
 // import OtonomosLogo from 'public/otonomos.png';
 
 export default class Header extends React.Component {
-
-  toggleNavigation(e) {
+  toggleNavigation (e) {
     e.preventDefault();
     $('body').toggleClass('mini-navbar');
     smoothlyMenu();
   }
-  render() {
-    const isAdmin = JSON.parse(localStorage.getItem('user')).data.isAdmin;
-    let nameComponent = (<h2 style={{ marginLeft: 35 }}></h2>);
+  render () {
+    // const isAdmin = JSON.parse(localStorage.getItem('user')).data.isAdmin;
+    // let nameComponent = (<h2 style={{ marginLeft: 35 }}></h2>);
     try {
       const co = JSON.parse(localStorage.activeCompany) || {};
-      const coName = co.name || "";
-      nameComponent = (<h2 style={{ marginLeft: 35 }}>{coName}</h2>)
+      const coName = co.name || '';
+      nameComponent = (<h2 style={{ marginLeft: 35 }}>{coName}</h2>);
     } catch (e) {
       // console.log('parse localStorage.currentCompany: ', e);
     }

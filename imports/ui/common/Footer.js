@@ -1,7 +1,7 @@
 import React from 'react';
 
 class Footer extends React.Component {
-    render() {
+    render () {
         return (
             <div className="footer gray-bg">
                 <div className="pull-right">
@@ -11,8 +11,8 @@ class Footer extends React.Component {
                     <strong>Copyright</strong> Otonomos &copy; 2015-2017
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Footer
+export default Footer;

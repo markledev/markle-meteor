@@ -7,27 +7,28 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { connect } from 'react-redux-meteor';
-import { toJS } from 'immutable';
+import PropTypes from 'prop-types';
+// import { toJS } from 'immutable';
 import { createStructuredSelector } from 'reselect';
 import * as selectors from './selectors';
 import { TRIGGER_SAGA_ONE } from './constants';
-import { GET_ALL_USERS } from '/imports/publications/PublicContainer/constants';
-import styles from './styles';
+import { GET_ALL_USERS } from '../../../publications/PublicContainer/constants';
 
 class PublicContainer extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
-  render() {
+  render () {
     const { allUsers, dispatchReducerOne, var1, currentUser } = this.props;
     return (
       <div>
         <div className="ibox">
           <div className="ibox-content">
             <FormattedMessage {...messages.fieldOne}/>
-            { this.props.currentUser._id } length: { allUsers.length }
+            { currentUser._id } length: { allUsers.length }
+            Viet is awesome!
             <button className="btn btn-success" onClick={dispatchReducerOne}>Methods in reducer</button>
             Test redux state updated: {var1}
           </div>
@@ -36,14 +37,22 @@ class PublicContainer extends React.Component {
       );
   }
 
-  //Keep this function intact to ensure app stability
-  componentWillUnmount() {
+  // Keep this function intact to ensure app stability
+  componentWillUnmount () {
     const { dispatchStopSagas } = this.props;
     dispatchStopSagas();
   }
 }
 
-//publications here
+PublicContainer.propTypes = {
+  allUsers: PropTypes.array,
+  dispatchReducerOne: PropTypes.func,
+  var1: PropTypes.string,
+  currentUser: PropTypes.object,
+  dispatchStopSagas: PropTypes.func
+};
+
+// publications here
 /*
   In case of multiple publications..
   if (
@@ -70,11 +79,11 @@ const mapTrackerToProps = (state, props) => {
       currentUser: {_id: 'lll'},
       allUsers: Meteor.users.find().fetch(),
       subsReady: true
-    }
+    };
   }
 
-  return { currentUser: new Object(), allUsers: [], subsReady: false };
-}
+  return { currentUser: {}, allUsers: [], subsReady: false };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -87,10 +96,10 @@ const mapDispatchToProps = (dispatch) => {
     dispatchStopSagas: () => {
       dispatch({
         type: 'CANCEL_SAGAS'
-      })
+      });
     }
-  }
-}
+  };
+};
 
 const mapStateToProps = createStructuredSelector({
   var1: selectors.selectVar1()
@@ -100,4 +109,4 @@ export default connect(
   mapTrackerToProps,
   mapStateToProps,
   mapDispatchToProps
-) (PublicContainer);
+)(PublicContainer);

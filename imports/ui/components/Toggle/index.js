@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import Select from './Select';
 import ToggleOption from '../ToggleOption';
 
-function Toggle(props) {
+function Toggle (props) {
   let content = (<option>--</option>);
 
   // If we have items, render them
@@ -30,7 +30,7 @@ Toggle.propTypes = {
   onToggle: PropTypes.func,
   values: PropTypes.array,
   value: PropTypes.string,
-  messages: PropTypes.object,
+  messages: PropTypes.object
 };
 
 export default Toggle;

@@ -3,23 +3,23 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   persona: {
     id: 'components.Navigation.persona',
-    defaultMessage: 'Persona',
+    defaultMessage: 'Persona'
   },
   companyCreation: {
     id: 'components.Navigation.companyCreation',
-    defaultMessage: 'Create Company',
+    defaultMessage: 'Create Company'
   },
   overView: {
     id: 'components.Navigation.overView',
-    defaultMessage: 'Overview',
+    defaultMessage: 'Overview'
   },
   vE: {
     id: 'components.Navigation.vE',
-    defaultMessage: 'Verification Entity',
+    defaultMessage: 'Verification Entity'
   },
   companySettings: {
     id: 'components.Navigation.companySettings',
-    defaultMessage: 'Company Settings',
+    defaultMessage: 'Company Settings'
   },
   resoOverview: {
     id: 'components.Navigation.resoOverview',
@@ -140,5 +140,5 @@ export default defineMessages({
   complexStructureKyc: {
     id: 'components.Navigation.complexStructureKyc',
     defaultMessage: 'Complex Structure KYC'
-  },
+  }
 });

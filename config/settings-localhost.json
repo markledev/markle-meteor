@@ -1,0 +1,92 @@
+{
+  "private": {
+    "isDevelopmentServer" : false,
+    "forceStopEnrollmentEmail" : false,
+    "disableSolcCompile"    : true,
+    "MailChimp": {
+      "apiKey"            : "xxxxxxxxxx",
+      "listId"            : "xxxxxxxxxx"
+    },
+    "stripe": {
+      "SG": {
+        "testSecretKey": "xxxxxxxxxx",
+        "liveSecretKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "US": {
+        "testSecretKey": "xxxxxxxxxx",
+        "liveSecretKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "UK": {
+        "testSecretKey": "xxxxxxxxxx",
+        "liveSecretKey": "xxxxxxxxxx",
+                "testing": true
+      },
+      "HK": {
+        "testSecretKey": "xxxxxxxxxx",
+        "liveSecretKey": "xxxxxxxxxx",
+        "testing": true
+      }
+    },
+    "kadira":{
+    },
+    "otoUtil": {
+      "errorLogKey": "xxxxxxxxxx"
+    },
+   "logger": {
+      "level": "verbose"
+    },
+    "mailgun": {
+      "username": "xxxxxxxxxx",
+      "password": "xxxxxxxxxx",
+      "server": "xxxxxxxxxx",
+      "port": 587
+    }
+  },
+  "public": {
+    "isDemoServer"        : false,
+    "isDevelopmentServer" : false,
+    "isTestingServer"     : false,
+    "stripe": {
+      "SG": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "US": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "UK": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "HK": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      }
+    },
+    "analyticsSettings": {
+      "Google Analytics" : {"trackingId": "xxxxxxxxxx"}
+    },
+    "stripe": {
+      "SG": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      },
+      "US": {
+        "testPublishableKey": "xxxxxxxxxx",
+        "livePublishableKey": "xxxxxxxxxx",
+        "testing": true
+      }
+    },
+    "logger": {
+      "level": "verbose"
+    }
+  }
+}

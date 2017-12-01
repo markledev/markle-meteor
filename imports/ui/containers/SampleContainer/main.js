@@ -1,23 +1,18 @@
 import React from 'react';
-import { IntlProvider } from 'react-intl';
 import { translationMessages } from './translations';
 import SampleContainer from './index';
 import { Provider } from 'react-redux-meteor';
 import configureStore from '/imports/ui/layouts/store';
 import reducer from './reducer';
 import sagas from './sagas';
-export default class SampleContainerMain extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+// import * as logger from '/imports/utils/client/logger';
+import * as globalVar from '/imports/utils/client/globalVar';
 
-	render() {
-		const currentLocale = Session.get('currentLocale') || 'en';
+export default class SampleContainerMain extends React.Component {
+	render () {
 		return (
 			<Provider store = { configureStore('SampleContainer', reducer, sagas) }>
-				<IntlProvider locale={ currentLocale } key={ currentLocale } messages={ translationMessages[currentLocale] }>
-					<SampleContainer />
-				</IntlProvider>
+				<SampleContainer />
 			</Provider>
 			)
 	}

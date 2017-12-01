@@ -3,25 +3,21 @@
 * {{ properCase name }}
 *
 */
-
+// npm packages
 import React from 'react';
-
-
 import { FormattedMessage, IntlProvider } from 'react-intl';
+import PropTypes from 'prop-types';
+
+// custom imports
 import messages from './messages';
 import { translationMessages } from './translations';
 import styles from './styles';
+// import * as logger from '../../../utils/client/logger';
+// import * as globalVar from '../../../utils/client/globalVar';
 
 class {{ properCase name }} extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    }
-  }
-
-  render() {
-    const currentLocale = Session.get('currentLocale') || 'en';
+  render () {
+    const { currentLocale } = this.props;
     return (
       <IntlProvider locale={ currentLocale } key={ currentLocale } messages={ translationMessages[currentLocale] } >        
         <div style={styles.mainContainer}>
@@ -39,6 +35,7 @@ class {{ properCase name }} extends React.Component { // eslint-disable-line rea
   optionalNumber: PropTypes.number,
   optionalObject: PropTypes.object,
   optionalString: PropTypes.string,
+  currentLocale: PropTypes.string.isRequired,
   // requiredArray: PropTypes.array.isRequired
 };
 
