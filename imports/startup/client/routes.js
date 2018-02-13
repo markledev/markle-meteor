@@ -11,7 +11,10 @@ import Checkout from '/imports/ui/containers/Checkout/main';
 
 import MultiLogin from '/imports/ui/containers/MultiLogin/main';
 
+import SampleChat from '/imports/ui/containers/SampleChat/main';
+
 // add_import_for_new_route
+
 
 
 
@@ -81,7 +84,17 @@ publicRoutes.route('/MultiLogin', {
   },
 });
 
+publicRoutes.route('/SampleChat', {
+  name: 'sampleChat',
+  action() {
+    mount(MinorLayout, {
+      main: <SampleChat/>,
+    });
+  },
+});
+
 // add_new_route
+
 
 
 

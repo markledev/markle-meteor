@@ -19,4 +19,5 @@ import '../../publications/SampleContainer/server/publications';
 import '../../publications/IntroPage/server/publications';
 import '../../publications/Checkout/server/publications';
 import '../../publications/MultiLogin/server/publications';
+import '../../publications/SampleChat/server/publications';
 // add_new_publications
