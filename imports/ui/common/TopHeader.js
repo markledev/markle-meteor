@@ -3,6 +3,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 // import { Dropdown } from 'react-bootstrap';
 import { smoothlyMenu } from '../layouts/Helpers';
 import LanguageToggle from '/imports/ui/components/LanguageToggle';
+import App from '/imports/ui/common/App';
 
 class TopHeader extends React.Component {
   constructor (props) {
@@ -20,12 +21,16 @@ class TopHeader extends React.Component {
     FlowRouter.go('logout');
   }
 
+  toggleSidebar() {
+    App.sidebar('toggle-sidebar');
+  }
+
   render () {
     return (
         <header className="navbar navbar-inverse navbar-fixed-top">
             <ul className="nav navbar-nav-custom">
                 <li>
-                    <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+                    <a href="javascript:void(0)" onClick={() => this.toggleSidebar()}>
                         <i className="fa fa-ellipsis-v fa-fw animation-fadeInRight" id="sidebar-toggle-mini"></i>
                         <i className="fa fa-bars fa-fw animation-fadeInRight" id="sidebar-toggle-full"></i>
                     </a>
